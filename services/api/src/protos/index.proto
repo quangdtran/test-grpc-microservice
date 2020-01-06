@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "book.proto";
+import "note.proto";
+
+service ApiService {
+  rpc List (Empty) returns (NoteList) {}
+  rpc List2 (Empty) returns (BookList) {}
+}
+
+message Empty {}

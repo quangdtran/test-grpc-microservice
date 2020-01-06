@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: ./services/app
+      dockerfile: Dockerfile
+    container_name: api
+    ports:
+      - 3001:3001
+      - 4001:4001
+    working_dir: /var/www/asset/api
+    volumes:
+      - ./services/api/:/var/www/asset/api
+    environment:
+      NODE_ENV: development
+    hostname: api
+    command: bash -c "npm rebuild && npm start"
+
+  app:
+    build:
+      context: ./services/app
+      dockerfile: Dockerfile
+    container_name: app
+    ports:
+      - 3002:3002
+    working_dir: /var/www/asset/app
+    volumes:
+      - ./services/app/:/var/www/asset/app
+    environment:
+      NODE_ENV: development
+    hostname: app
+    command: bash -c "npm rebuild && npm start"
+    depends_on:
+      - api
+
+  nginx:
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile
+    container_name: service-discovery
+    hostname: test_host
+    volumes:
+      - ./services/nginx/conf:/etc/nginx/conf.d
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - api
+      - app
