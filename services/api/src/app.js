@@ -38,7 +38,7 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3001, () => console.log('Server run on port ', 3001));
+app.listen(3001, () => console.log('API service running ', 3001));
 
 // GRPC server
 const notes = [

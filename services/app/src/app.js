@@ -38,4 +38,4 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3002, () => console.log('API service on 3002'));
+app.listen(3001, () => console.log('Application service running'));
